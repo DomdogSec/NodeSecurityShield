@@ -1,5 +1,4 @@
-<img src="/assets/images/NodeSecurityShield.png" width="50%" height="50%">
-![Node Security Shield]( )
+<img src="/assets/images/NodeSecurityShield.png" width="200px" height="250px">
 
 
 # Node Security Shield
