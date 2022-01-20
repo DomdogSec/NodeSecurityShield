@@ -1,0 +1,1 @@
+module.exports.enableAttackMonitoring = require("./lib/attackMonitoring.js");
