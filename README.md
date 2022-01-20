@@ -7,7 +7,7 @@ A Developer and Security Engineer friendly module for Securing NodeJS Applicatio
 
 Inspired by the log4J vulnerability ([CVE-2021-44228](https://nvd.nist.gov/vuln/detail/CVE-2021-44228)) which can be exploited because an application is able to make arbitrary network calls.
 
-We felt there is an need for an application to declare what privileges it can have so that exploitation of such vulnerabilies becomes harder.
+We felt there is an need for an application to declare what privileges it can have so that exploitation of such vulnerabilities becomes harder.
 
 To achieve this, **NSS** (__Node Security Shield__) have **Resource Access Policy**.
 
