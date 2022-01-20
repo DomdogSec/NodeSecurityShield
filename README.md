@@ -114,7 +114,7 @@ var callbackFunction = function (violationEvent) {
 ## Authors
 
 - Lavakumar Kuppan  
-    - Github    - [@lavakumark](https://www.github.com/lavakumark)
+    - Github    - [@lavakumar](https://github.com/Lavakumar)
     - Twitter   - [@lavakumark](https://twitter.com/lavakumark)
 - Sukesh Pappu  
     - Github    - [@thelogicalbeard](https://www.github.com/thelogicalbeard)
