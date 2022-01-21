@@ -3,28 +3,25 @@
 
 # Node Security Shield
 
-A Developer and Security Engineer friendly module for Securing NodeJS Applications.
+A Developer and Security Engineer friendly package for Securing NodeJS Applications.
 
-Inspired by the log4J vulnerability ([CVE-2021-44228](https://nvd.nist.gov/vuln/detail/CVE-2021-44228)) which can be exploited because an application is able to make arbitrary network calls.
+Inspired by the log4J vulnerability ([CVE-2021-44228](https://nvd.nist.gov/vuln/detail/CVE-2021-44228)) which can be exploited because an application can make arbitrary network calls.
 
 We felt there is an need for an application to declare what privileges it can have so that exploitation of such vulnerabilities becomes harder.
 
-To achieve this, **NSS** (__Node Security Shield__) have **Resource Access Policy**.
+To achieve this, **NSS** (__Node Security Shield__) has **Resource Access Policy**.
 
 
 ### Resource Access Policy (RAP)
-**Resource Access Policy** is similar **CSP**([Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP)).
+**Resource Access Policy** is similar to **CSP**([Content Security Policy](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP)).
 
-It lets developer/security engineer declare what resources an application should access. And **Node Security Shield** will enforce it.
-
-
-
+It lets the developer/security engineer declare what resources an application should access. And **Node Security Shield** will enforce it.
 
 
 
 ## Installation
 
-Install *Node Security Shield* with npm
+Install *Node Security Shield* using npm
 
 ```bash
   npm install nodesecurityshield
@@ -49,8 +46,8 @@ const resourceAccessPolicy  = {
       }
 };
 ```
-* **Note:** blockedDomains has greater presidence over allowedDomains. 
-* **i.e.,** request will be checked against blockedDomains first then followed allowedDoamins.
+* **Note:** blockedDomains holds precedence over allowedDomains.
+* **i.e.,** requests checked against blockedDomains first then allowedDomains.
 
 **Sample *callbackFunction* for Attack Monitoring**
 ```javascript
@@ -125,9 +122,4 @@ var callbackFunction = function (violationEvent) {
 ## License
 
 [Apache License 2.0](/LICENSE)
-
-
-## Support
-
-For support, email sukesh@domdog.io
 
