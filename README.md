@@ -77,6 +77,20 @@ var callbackFunction = function (violationEvent) {
 ```
 
 ### Integrating with Sentry
+**Sample *resourceAccessPolicyto integrate with [Sentry](https://sentry.io)***
+```javascript
+const resourceAccessPolicy  = {
+  "reportUriHosts" : ["ingest.sentry.io"],
+  "outBoundRequest" : {
+          "blockedDomains" : ["*.123.com", "stats.abc.com", 'xyz.com'],
+          "allowedDomains" : ["*.domdog.io"]
+      }
+};
+```
+* **Note:** reportUriHosts is an array of hosts to which reports are sent. Similar to report-uri directive in CSP. 
+* **Note:** blockedDomains holds precedence over allowedDomains.
+* **i.e.,** requests checked against blockedDomains first then allowedDomains.
+
 **Sample *callbackFunction to integrate with [Sentry](https://sentry.io)***
 ```javascript
 var callbackFunction = function (violationEvent) {
