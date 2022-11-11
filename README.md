@@ -17,21 +17,15 @@ It lets the developer/security engineer declare what resources an application sh
 
 ## Installation
 
-Clone the repository 
+### Install *NodeSecurityShield* using npm
 
-```
-git clone https://github.com/DomdogSec/NodeSecurityShield
-```
-
-Install *NSS* using npm
-
-```
-  npm install <path-to-cloned-repository>
+```bash
+npm install nodesecurityshield
 ```
 
 ## Usage
 
-```
+```jsx
 // Require Node Security Shield
 let nodeSecurityShield = require('nodesecurityshield');
 
@@ -39,40 +33,52 @@ let nodeSecurityShield = require('nodesecurityshield');
 nodeSecurityShield.enableAttackMonitoring("Unique-App-Id",resourceAccessPolicy ,callbackFunction);
 ```
 
-**Sample *resourceAccessPolicy [BASIC]***
+### **Sample *resourceAccessPolicy [BASIC]***
 
-```
+```jsx
 const resourceAccessPolicy  = {
   "outBoundRequest" : {
 
       "blockedDomains" : ["compromised.domdog.io"],
     
       "allowedDomains" : []
-    }
+   },
+	"executedCommand": {
+
+        "allowedCommands": ["pwd" , "ls.*"]
+   }
 };
 ```
 
-- **Note:** blockedDomains holds precedence over allowedDomains.
-- **i.e.,** requests checked against blockedDomains first then allowedDomains.
+- **`outBoundRequest`:** defines the accepted behaviour for `Outbound Requests`
+    - **Note:** blockedDomains hold precedence over allowedDomains.
+    - **i.e.,** requests checked against blockedDomains first then allowedDomains.
+- **`executedCommand`:** defines the accepted behaviour for `Command Execution`
+    - `allowedCommands` Array accepts `String` . You can pass a RegEx to allow a pattern of commands.
+    - **Note:** default behaviour is to block all command executions. Provided, RAP has `executedCommand` property defined.
+    - When the above RAP is used, only `pwd` command is allowed to execute.
 
-**Sample *callbackFunction* to log RAP violations to conosle.**
+### **Sample *callbackFunction* to log RAP violations to console.**
 
-```
+```jsx
 var callbackFunction = function (violationEvent,violations,violationLimitPerMinReached) {
   console.log(JSON.stringify(violationEvent,null, 4));
 }
 ```
 
-- ***violationEvent -** RAP violation which occurred. It is presented as a CSP violation.*
-- ***violations -** RAP violation count. Resets to ZERO every minute.*
-- ***violationLimitPerMinReached -** true if RAP violations count exceeds 'maxViolationsPerMinute’ [ an option in RAP]*
-- ****To Block an Attack** - throw an error
+- ***`violationEvent` -** RAP violation which occurred. It is presented as a CSP violation.*
+- ***`violations` -** RAP violation count. Resets to ZERO every minute.*
+- ***`violationLimitPerMinReached` -** true if RAP violations count exceeds 'maxViolationsPerMinute’ [ an option in RAP]*
+- **To Block an Attack** - throw an error
+    
+    ```jsx
+    throw new Error("Request Blocked. It violates declared Resource Access Policy.")
+    ```
+    
 
-    `throw new Error("Request Blocked. It violates declared Resource Access Policy.")`
+### **Sample violationEvent**
 
-**Sample violationEvent**
-
-```
+```jsx
 {
     "csp-report": {
         "document-uri": "https://Unique-App-Id",
@@ -88,17 +94,17 @@ var callbackFunction = function (violationEvent,violations,violationLimitPerMinR
 }
 ```
 
-- **document-uri :** contains Unique-App-Id , passed during initialization of NSS
-- **blocked-uri :** domain of the outbound request which violated RAP
-- **violated-directive :** `connect-src` is synonym for `Outbout Request`
-- **original-policy :** violated Resource Access Policy (RAP)
-- **source-file :** Stack Trace of where this violation.
+- **`document-uri:`** contains Unique-App-Id, passed during initialization of NSS
+- **`blocked-uri`:** domain of the outbound request which violated RAP
+- **`violated-directive`:** `connect-src` is a synonym for `Outbound Request` likewise `script-src` is a synonym for `Command Execution`
+- **`original-policy`:** violated Resource Access Policy (RAP)
+- **`source-file`:** Stack Trace of where this violation.
 
 ## Integrating with Sentry
 
-**Sample *resourceAccessPolicy to integrate with [Sentry](https://sentry.io/)***
+### **Sample *resourceAccessPolicy to integrate with [Sentry](https://sentry.io/)***
 
-```
+```jsx
 const resourceAccessPolicy  = {
   "outBoundRequest" : {
 
@@ -106,22 +112,31 @@ const resourceAccessPolicy  = {
     
       "allowedDomains" : []
     },
-"reportUri": "https://ingest.sentry.io/api/6011856/security/?sentry_key=",
+	"executedCommand": {
+
+        "allowedCommands": ["pwd" , "ls.*"]
+   },
+	"reportUri": "https://ingest.sentry.io/api/6011856/security/?sentry_key=",
 
 };
 ```
 
-- **reportUri :** Sends Violations to a given endpoint.
-As violations are similar to Content Security Policy violations. Any CSP monitoring solutions can be used. 
-We used the Sentry endpoint in the above RAP.
+- **`outBoundRequest`:** defines the accepted behaviour for `Outbound Requests`
+    - **Note:** blockedDomains hold precedence over allowedDomains.
+    - **i.e.,** requests checked against blockedDomains first then allowedDomains.
+- **`executedCommand`:** defines the accepted behaviour for `Command Execution`
+    - `allowedCommands` Array accepts `String` . You can pass a RegEx to allow a pattern of commands.
+    - **Note:** default behaviour is to block all command executions. Provided, RAP has `executedCommand` property defined.
+    - When the above RAP is used, only `pwd` command is allowed to execute.
+- **`reportUri` :** Sends Violations to a given endpoint. As violations are similar to Content Security Policy violations. Any CSP monitoring solutions can be used. We used the Sentry endpoint in the above RAP.
 
 **Screenshot from Sentry dashboard**
 ![sentry issues](/assets/screenshots/Sentry1.png)
 ![sentry issues](/assets/screenshots/Sentry.png)
 
-**Sample *resourceAccessPolicy [Advanced]***
+### **Sample *resourceAccessPolicy [Advanced]***
 
-```
+```jsx
 const resourceAccessPolicy = {
     "outBoundRequest" : {
     
@@ -157,6 +172,10 @@ const resourceAccessPolicy = {
           
         ]
     },
+		"executedCommand": {
+
+        "allowedCommands": ["pwd" , "ls.*"]
+	   },
     
     "reportUri": "https://endpoint-to-send-violations",
     
@@ -164,35 +183,37 @@ const resourceAccessPolicy = {
   }
 ```
 
-- **Note:** blockedDomains holds precedence over allowedDomains.
-- **Module Specific Control :** allowedDomain Array accepts Objects with following
-    - **domain :**  Array of domains which are to be allowed for provided files.
-    - **modules :** Array of Objects containing file paths. Only outbound Requests made through these files to specified domains are allowed.
-- **reportUri :** Sends Violations to a given endpoint.
-As violations are similar to Content Security Policy violations. Any CSP monitoring solutions can be used.
-- **maxViolationsPerMinute :** Maximum number of violations to be sent to the reportUri.  
+- **`outBoundRequest`:** defines the accepted behaviour for `Outbound Requests`
+    - **Note:** blockedDomains hold precedence over allowedDomains.
+    - **i.e.,** requests checked against blockedDomains first then allowedDomains.
+- **`executedCommand`:** defines the accepted behaviour for `Command Execution`
+    - `allowedCommands` Array accepts `String` . You can pass a RegEx to allow a pattern.
+    - **Note:** default behaviour is to block all command executions. Provided, RAP has `executedCommand` property defined.
+    - When the above RAP is used, only `pwd` command is allowed to execute.
+- **`reportUri`:** Sends Violations to a given endpoint. As violations are similar to **Content Security Policy** violations. Any CSP monitoring solutions can be used. We used the Sentry endpoint in the above RAP.
+- **Module Specific Control:** `allowedDomain` Array accepts Objects with following
+    - `domain`: Array of domains which are to be allowed for provided files.
+    - `modules`: Array of Objects containing file paths. Only outbound Requests made through these files to specified domains are allowed.
+- **`maxViolationsPerMinute`:** Maximum number of violations to be sent to the `reportUri`.
 If not specified, the default value (*100 violations*) is used.
 
 ## Features
 
 - **Attack Monitoring**
     - Outbound Network Calls
+    - Command Execution
 - **Attack Blocking**
     - Outbound Network Calls
+    - Command Execution
 - **Module Specific Control**
-
 
 ## Roadmap
 
 - **Attack Monitoring**
-    - Command Execution
     - File Calls
 - **Attack Blocking**
-    - Command Execution
     - File Calls
 - **Vulnerability Scanner**
-
-
 
 ## Authors
 
