@@ -4,7 +4,7 @@
   "description": "A Developer and Security Engineer friendly module for Securing NodeJS Applications.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\""
   },
   "keywords": ["nodejs security","attack monitoring","attack blocking", "scanner", "vulnerability detection", "domdog.io","node security", "resource access policy"],
   "repository": "https://github.com/DomdogSec/NodeSecurityShield",
