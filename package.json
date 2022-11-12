@@ -1,17 +1,26 @@
 {
   "name": "nodesecurityshield",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A Developer and Security Engineer friendly module for Securing NodeJS Applications.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\""
   },
-  "keywords": ["nodejs security","attack monitoring","attack blocking", "scanner", "vulnerability detection", "domdog.io","node security", "resource access policy"],
+  "keywords": [
+    "nodejs security",
+    "attack monitoring",
+    "attack blocking",
+    "scanner",
+    "vulnerability detection",
+    "domdog.io",
+    "node security",
+    "resource access policy"
+  ],
   "repository": "https://github.com/DomdogSec/NodeSecurityShield",
   "author": {
-    "name" : "Domdog Security",
-    "email" : "sukesh@domdog.io",
-    "url" : "https://domdog.io"
+    "name": "Domdog Security",
+    "email": "sukesh@domdog.io",
+    "url": "https://domdog.io"
   },
   "license": "Apache License 2.0"
 }
