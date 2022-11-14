@@ -1,6 +1,6 @@
 {
   "name": "nodesecurityshield",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "A Developer and Security Engineer friendly module for Securing NodeJS Applications.",
   "main": "index.js",
   "scripts": {
