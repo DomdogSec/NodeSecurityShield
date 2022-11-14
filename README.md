@@ -45,7 +45,11 @@ const resourceAccessPolicy  = {
    },
 	"executedCommand": {
 
+<<<<<<< Updated upstream
         "allowedCommands": ["pwd"]
+=======
+        "allowedCommands": ["pwd" , "(node)[ ](helper\/)[a-z|0-9]*(.js)"]
+>>>>>>> Stashed changes
    }
 };
 ```
@@ -55,8 +59,11 @@ const resourceAccessPolicy  = {
     - **i.e.,** requests checked against blockedDomains first then allowedDomains.
 - **`executedCommand`:** defines the accepted behaviour for `Command Execution`
     - `allowedCommands` Array accepts `String` . You can pass a RegEx to allow a pattern of commands.
-    - **Note:** default behaviour is to block all command executions. Provided, RAP has `executedCommand` property defined.
-    - When the above RAP is used, only `pwd` command is allowed to execute.
+    - The default behaviour is to block all command executions. Provided, RAP has `executedCommand` property defined.
+    - When the above RAP is used,
+        - `pwd` command is allowed to execute and
+        - `.js` files inside `helper` are allowed to spawn as node processes.
+    - **Note:** Avoid usage of `.*` in regex. As this will allow the execution of any command after a pipe `|`.
 
 ### **Sample *callbackFunction* to log RAP violations to console.**
 
@@ -114,7 +121,7 @@ const resourceAccessPolicy  = {
     },
 	"executedCommand": {
 
-        "allowedCommands": ["pwd" , "ls.*"]
+        "allowedCommands": ["pwd" , "(node)[ ](helper\/)[a-z|0-9]*(.js)"]
    },
 	"reportUri": "https://ingest.sentry.io/api/6011856/security/?sentry_key=",
 
@@ -126,8 +133,11 @@ const resourceAccessPolicy  = {
     - **i.e.,** requests checked against blockedDomains first then allowedDomains.
 - **`executedCommand`:** defines the accepted behaviour for `Command Execution`
     - `allowedCommands` Array accepts `String` . You can pass a RegEx to allow a pattern of commands.
-    - **Note:** default behaviour is to block all command executions. Provided, RAP has `executedCommand` property defined.
-    - When the above RAP is used, only `pwd` command is allowed to execute.
+    - The default behaviour is to block all command executions. Provided, RAP has `executedCommand` property defined.
+    - When the above RAP is used,
+        - `pwd` command is allowed to execute and
+        - `.js` files inside `helper` are allowed to spawn as node processes.
+    - **Note:** Avoid usage of `.*` in regex. As this will allow the execution of any command after a pipe `|`.
 - **`reportUri` :** Sends Violations to a given endpoint. As violations are similar to Content Security Policy violations. Any CSP monitoring solutions can be used. We used the Sentry endpoint in the above RAP.
 
 **Screenshot from Sentry dashboard**
@@ -174,7 +184,7 @@ const resourceAccessPolicy = {
     },
 		"executedCommand": {
 
-        "allowedCommands": ["pwd" , "ls.*"]
+            "allowedCommands": ["pwd" , "(node)[ ](helper\/)[a-z|0-9]*(.js)"]
 	   },
     
     "reportUri": "https://endpoint-to-send-violations",
@@ -187,9 +197,12 @@ const resourceAccessPolicy = {
     - **Note:** blockedDomains hold precedence over allowedDomains.
     - **i.e.,** requests checked against blockedDomains first then allowedDomains.
 - **`executedCommand`:** defines the accepted behaviour for `Command Execution`
-    - `allowedCommands` Array accepts `String` . You can pass a RegEx to allow a pattern.
-    - **Note:** default behaviour is to block all command executions. Provided, RAP has `executedCommand` property defined.
-    - When the above RAP is used, only `pwd` command is allowed to execute.
+    - `allowedCommands` Array accepts `String` . You can pass a RegEx to allow a pattern of commands.
+    - The default behaviour is to block all command executions. Provided, RAP has `executedCommand` property defined.
+    - When the above RAP is used,
+        - `pwd` command is allowed to execute and
+        - `.js` files inside `helper` are allowed to spawn as node processes.
+    - **Note:** Avoid usage of `.*` in regex. As this will allow the execution of any command after a pipe `|`.
 - **`reportUri`:** Sends Violations to a given endpoint. As violations are similar to **Content Security Policy** violations. Any CSP monitoring solutions can be used. We used the Sentry endpoint in the above RAP.
 - **Module Specific Control:** `allowedDomain` Array accepts Objects with following
     - `domain`: Array of domains which are to be allowed for provided files.
