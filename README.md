@@ -45,11 +45,7 @@ const resourceAccessPolicy  = {
    },
 	"executedCommand": {
 
-<<<<<<< Updated upstream
-        "allowedCommands": ["pwd"]
-=======
         "allowedCommands": ["pwd" , "(node)[ ](helper\/)[a-z|0-9]*(.js)"]
->>>>>>> Stashed changes
    }
 };
 ```
