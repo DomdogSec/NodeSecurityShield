@@ -45,7 +45,7 @@ const resourceAccessPolicy  = {
    },
 	"executedCommand": {
 
-        "allowedCommands": ["pwd" , "ls.*"]
+        "allowedCommands": ["pwd"]
    }
 };
 ```
